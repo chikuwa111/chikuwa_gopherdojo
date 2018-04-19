@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"imgconverter"
+	"gopherdojo/step1/imgconverter"
 )
 
 var (
