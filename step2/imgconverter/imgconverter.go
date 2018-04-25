@@ -36,19 +36,22 @@ func Decode(path string) (Image, error) {
 // Encode does encode image into specific format and create a file.
 // This supports jpg(jpeg) and png.
 func (img *Image) Encode(dest string) error {
-	file, err := os.Create(dest)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
 	switch filepath.Ext(dest) {
 	case ".jpg", ".jpeg":
-		err = jpeg.Encode(file, img, &jpeg.Options{Quality: 100})
+		file, err := os.Create(dest)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		return jpeg.Encode(file, img, &jpeg.Options{Quality: 100})
 	case ".png":
-		err = png.Encode(file, img)
+		file, err := os.Create(dest)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		return png.Encode(file, img)
 	default:
-		err = errors.New("invalid dest")
+		return errors.New("invalid dest")
 	}
-	return err
 }
