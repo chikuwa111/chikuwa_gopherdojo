@@ -6,10 +6,9 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"gopherdojo/step2/imgconverter"
+	"gopherdojo/step2/pathwalker"
 )
 
 var (
@@ -50,10 +49,7 @@ func main() {
 
 	args := flag.Args()
 	for _, argPath := range args {
-		err := filepath.Walk(argPath, func(path string, info os.FileInfo, err error) error {
-			if strings.ToLower(filepath.Ext(path)) != "."+targetExt {
-				return nil
-			}
+		err := pathwalker.Find(argPath, targetExt, func(path string) error {
 			img, err := imgconverter.Decode(path)
 			if err != nil {
 				return err

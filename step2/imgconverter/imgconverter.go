@@ -1,4 +1,5 @@
-// Package imgconverter provides Convert function.
+// Package imgconverter provides Decode and Encode functions.
+// These functions need file path.
 package imgconverter
 
 import (
@@ -15,9 +16,26 @@ type Image struct {
 	image.Image
 }
 
-// Convert does convert image into specific format and create a file.
+// Decode does decode image in specific path.
 // This supports jpg(jpeg) and png.
-func (img *Image) Convert(dest string) error {
+func Decode(path string) (Image, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return Image{nil}, err
+	}
+	defer file.Close()
+
+	img, _, err := image.Decode(file)
+	if err != nil {
+		return Image{nil}, err
+	}
+
+	return Image{img}, nil
+}
+
+// Encode does encode image into specific format and create a file.
+// This supports jpg(jpeg) and png.
+func (img *Image) Encode(dest string) error {
 	file, err := os.Create(dest)
 	if err != nil {
 		return err
