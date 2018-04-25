@@ -14,10 +14,10 @@ func TestFind(t *testing.T) {
 		extension string
 		expected  []string
 	}{
-		// {name: "txtInFiles1", path: "testdata/files1", extension: "txt", expected: []string{"testdata/files1/text1.txt", "testdata/files1/text2.txt"}},
-		// {name: "logInFiles1", path: "testdata/files1", extension: "log", expected: []string{"testdata/files1/log1.log", "testdata/files1/log2.log"}},
-		// {name: "recursive", path: "testdata", extension: "txt", expected: []string{"testdata/files1/text1.txt", "testdata/files1/text2.txt", "testdata/files2/text1.txt", "testdata/files2/text2.txt"}},
-		// {name: "filePath", path: "testdata/files1/text1.txt", extension: "txt", expected: []string{"testdata/files1/text1.txt"}},
+		{name: "txtInFiles1", path: "testdata/files1", extension: "txt", expected: []string{"testdata/files1/text1.txt", "testdata/files1/text2.txt"}},
+		{name: "logInFiles1", path: "testdata/files1", extension: "log", expected: []string{"testdata/files1/log1.log", "testdata/files1/log2.log"}},
+		{name: "recursive", path: "testdata", extension: "txt", expected: []string{"testdata/files1/text1.txt", "testdata/files1/text2.txt", "testdata/files2/text1.txt", "testdata/files2/text2.txt"}},
+		{name: "filePath", path: "testdata/files1/text1.txt", extension: "txt", expected: []string{"testdata/files1/text1.txt"}},
 		{name: "noFiles", path: "testdata/no-files", extension: "txt", expected: []string{}},
 	}
 
