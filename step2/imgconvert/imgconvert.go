@@ -3,14 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"image"
 	_ "image/jpeg"
 	_ "image/png"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"gopherdojo/step1/imgconverter"
+	"gopherdojo/step2/imgconverter"
 )
 
 var (
@@ -31,24 +30,6 @@ func usage() {
 func handleErr(err error) {
 	fmt.Fprintln(os.Stderr, err.Error())
 	statusCode = 1
-}
-
-func convert(path string) error {
-	inputFile, err := os.Open(path)
-	if err != nil {
-		return err
-	}
-	defer inputFile.Close()
-
-	img, _, err := image.Decode(inputFile)
-	if err != nil {
-		return err
-	}
-
-	convertImg := imgconverter.Image{img}
-	dest := path + "." + outputExt
-	err = convertImg.Convert(dest)
-	return err
 }
 
 func init() {
@@ -73,8 +54,13 @@ func main() {
 			if strings.ToLower(filepath.Ext(path)) != "."+targetExt {
 				return nil
 			}
-			convertErr := convert(path)
-			return convertErr
+			img, err := imgconverter.Decode(path)
+			if err != nil {
+				return err
+			}
+			dest := path + "." + outputExt
+			err = img.Encode(dest)
+			return err
 		})
 		if err != nil {
 			handleErr(err)
