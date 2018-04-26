@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	_ "image/jpeg"
-	_ "image/png"
 	"os"
 
 	"gopherdojo/step2/imgconverter"
